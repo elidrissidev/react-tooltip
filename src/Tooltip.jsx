@@ -23,11 +23,19 @@ export function Tooltip({ title, placement, manual: isManual, children }) {
     }
   }, [])
 
+  // Event handler to hide tooltip when 'Esc' key is pressed
+  const handleKeyDown = useCallback(event => {
+    if (event.key === 'Escape') {
+      setVisible(false)
+    }
+  }, [])
+
   const additionalChildrenProps = {
     ref: targetElRef,
     // Reference tooltip element
     // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tooltip_Role#associated_wai-aria_roles_states_and_properties
     'aria-describedby': tooltipId,
+    onKeyDown: handleKeyDown,
     // Don't include event handlers if tooltip is configured to be controlled manually
     ...(isManual
       ? {}
