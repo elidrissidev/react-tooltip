@@ -10,18 +10,39 @@ export function Tooltip({ title, placement, children }) {
 
   const { targetElRef, tooltipElRef, position } = useTooltipPosition(placement)
 
-  // Memoized callbacks to show and hide tooltip
+  // Memoized callbacks to show, hide, and toggle tooltip
   const show = useCallback(() => setVisible(true), [])
   const hide = useCallback(() => setVisible(false), [])
+  const toggle = useCallback(value => {
+    if (value !== undefined) {
+      setVisible(!!value)
+    } else {
+      setVisible(value => !value)
+    }
+  }, [])
+
+  const additionalChildrenProps = {
+    ref: targetElRef,
+    onMouseOver: show,
+    onMouseLeave: hide,
+    onFocus: show,
+    onBlur: hide,
+  }
 
   const renderChildren = () => {
-    return React.cloneElement(children, {
-      ref: targetElRef,
-      onMouseOver: show,
-      onMouseLeave: hide,
-      onFocus: show,
-      onBlur: hide,
-    })
+    // If children is a text node, warp inside a span to get a ref
+    if (typeof children === 'string') {
+      return <span {...additionalChildrenProps}>{children}</span>
+    }
+
+    // If children is a function, wrap inside a span to get a ref and use as a "render prop"
+    if (typeof children === 'function') {
+      return <span {...additionalChildrenProps}>{children({ visible, toggle })}</span>
+    }
+
+    // It's safe to assume now that children is a react element or component (?),
+    // so clone it to add the additional props
+    return React.cloneElement(children, additionalChildrenProps)
   }
 
   return (
@@ -49,7 +70,7 @@ Tooltip.propTypes = {
     'bottom-right',
   ]),
   // The target element for the tooltiip
-  children: PropTypes.node.isRequired,
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
 }
 
 Tooltip.defaultProps = {
