@@ -34,4 +34,5 @@ export const ToggleManually = args => (
 ToggleManually.args = {
   title: "I'm a tooltip that can be controlled manually!",
   placement: 'bottom',
+  manual: true,
 }

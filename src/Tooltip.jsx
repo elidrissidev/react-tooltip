@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import './Tooltip.css'
 import { useTooltipPosition } from './hooks/useTooltipPosition'
 
-export function Tooltip({ title, placement, children }) {
+export function Tooltip({ title, placement, manual: isManual, children }) {
   const [visible, setVisible] = useState(false)
 
   const { targetElRef, tooltipElRef, position } = useTooltipPosition(placement)
@@ -23,10 +23,15 @@ export function Tooltip({ title, placement, children }) {
 
   const additionalChildrenProps = {
     ref: targetElRef,
-    onMouseOver: show,
-    onMouseLeave: hide,
-    onFocus: show,
-    onBlur: hide,
+    // Don't include event handlers if tooltip is configured to be controlled manually
+    ...(isManual
+      ? {}
+      : {
+          onMouseOver: show,
+          onMouseLeave: hide,
+          onFocus: show,
+          onBlur: hide,
+        }),
   }
 
   const renderChildren = () => {
@@ -69,10 +74,13 @@ Tooltip.propTypes = {
     'bottom',
     'bottom-right',
   ]),
+  // Whether to control the tooltip manually or show on hover/focus
+  manual: PropTypes.bool,
   // The target element for the tooltiip
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
 }
 
 Tooltip.defaultProps = {
   placement: 'bottom',
+  manual: false,
 }
