@@ -29,6 +29,13 @@ export function useTooltipPosition(placement) {
 
   useLayoutEffect(updatePosition, [updatePosition])
 
+  // Observe the dimensions of the document element and re-calculate tooltip position when they change
+  useLayoutEffect(() => {
+    const observer = new ResizeObserver(() => updatePosition())
+    observer.observe(document.documentElement)
+    return () => observer.disconnect()
+  }, [updatePosition])
+
   return { targetElRef, tooltipElRef, position }
 }
 
