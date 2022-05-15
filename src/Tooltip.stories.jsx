@@ -6,9 +6,11 @@ export default {
 }
 
 const Template = args => (
-  <Tooltip {...args}>
-    <button type="button">Focus or hover over me</button>
-  </Tooltip>
+  <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
+    <Tooltip {...args}>
+      <button type="button">Focus or hover over me</button>
+    </Tooltip>
+  </div>
 )
 
 export const Default = Template.bind({})

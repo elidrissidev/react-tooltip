@@ -5,7 +5,7 @@ import './Tooltip.css'
 import { useTooltipPosition } from './hooks/useTooltipPosition'
 
 export function Tooltip({ title, placement, children }) {
-  const { targetElRef, position } = useTooltipPosition(placement)
+  const { targetElRef, tooltipElRef, position } = useTooltipPosition(placement)
 
   const renderChildren = () => {
     return React.cloneElement(children, {
@@ -16,7 +16,7 @@ export function Tooltip({ title, placement, children }) {
   return (
     <div className="Tooltip Tooltip--visible">
       {renderChildren()}
-      <div className="Tooltip__title" role="tooltip" style={{ ...position }}>
+      <div ref={tooltipElRef} className="Tooltip__title" role="tooltip" style={{ ...position }}>
         {title}
       </div>
     </div>
