@@ -34,7 +34,7 @@ export function Tooltip({ title, placement, manual: isManual, children }) {
     ref: targetElRef,
     // Reference tooltip element
     // https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tooltip_Role#associated_wai-aria_roles_states_and_properties
-    'aria-describedby': tooltipId,
+    'aria-describedby': `tooltip-${tooltipId}`,
     onKeyDown: handleKeyDown,
     // Don't include event handlers if tooltip is configured to be controlled manually
     ...(isManual
@@ -68,7 +68,7 @@ export function Tooltip({ title, placement, manual: isManual, children }) {
       {renderChildren()}
       <div
         ref={tooltipElRef}
-        id={tooltipId}
+        id={`tooltip-${tooltipId}`}
         className="Tooltip__title"
         role="tooltip"
         style={{ ...position }}
