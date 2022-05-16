@@ -26,3 +26,59 @@
   visibility: hidden;
   width: fit-content;
 }
+
+/* Tooltip caret positions */
+
+.Tooltip .Tooltip__title::before {
+  border: 4px solid transparent;
+  content: '';
+  position: absolute;
+}
+
+.Tooltip--left .Tooltip__title::before {
+  border-left-color: #24242f;
+  left: 100%;
+  top: calc(50% - 4px);
+}
+
+.Tooltip--top-left .Tooltip__title::before {
+  border-top-color: #24242f;
+  left: 8px;
+  top: 100%;
+}
+
+.Tooltip--top .Tooltip__title::before {
+  border-top-color: #24242f;
+  left: calc(50% - 4px);
+  top: 100%;
+}
+
+.Tooltip--top-right .Tooltip__title::before {
+  border-top-color: #24242f;
+  right: 8px;
+  top: 100%;
+}
+
+.Tooltip--right .Tooltip__title::before {
+  border-right-color: #24242f;
+  right: 100%;
+  top: calc(50% - 4px);
+}
+
+.Tooltip--bottom-left .Tooltip__title::before {
+  border-bottom-color: #24242f;
+  bottom: 100%;
+  left: 8px;
+}
+
+.Tooltip--bottom .Tooltip__title::before {
+  border-bottom-color: #24242f;
+  bottom: 100%;
+  left: calc(50% - 4px);
+}
+
+.Tooltip--bottom-right .Tooltip__title::before {
+  border-bottom-color: #24242f;
+  bottom: 100%;
+  right: 8px;
+}

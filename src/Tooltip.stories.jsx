@@ -12,12 +12,12 @@ export default {
   ],
 }
 
-export const Default = args => (
+export const ToggleByFocusOrHover = args => (
   <Tooltip {...args}>
     <button type="button">Focus or hover over me</button>
   </Tooltip>
 )
-Default.args = {
+ToggleByFocusOrHover.args = {
   title: "I'm a tooltip triggered by default behavior (hover, or focus)!",
   placement: 'bottom',
 }

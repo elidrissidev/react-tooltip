@@ -64,7 +64,7 @@ export function Tooltip({ title, placement, manual: isManual, children }) {
   }
 
   return (
-    <div className={clsx('Tooltip', { 'Tooltip--visible': visible })}>
+    <div className={clsx('Tooltip', `Tooltip--${placement}`, { 'Tooltip--visible': visible })}>
       {renderChildren()}
       <div
         ref={tooltipElRef}

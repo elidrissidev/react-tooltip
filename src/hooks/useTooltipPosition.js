@@ -47,7 +47,7 @@ export function useTooltipPosition(placement) {
  * @param {DOMRect} tooltipRect Bounding box of the tooltip element
  */
 function getPosition(placement, targetRect, tooltipRect) {
-  const margin = 8
+  const margin = 4
   const position = {}
 
   switch (placement) {
