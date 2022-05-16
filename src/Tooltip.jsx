@@ -50,12 +50,20 @@ export function Tooltip({ title, placement, manual: isManual, noDelay, children 
   const renderChildren = () => {
     // If children is a text node, warp inside a span to get a ref
     if (typeof children === 'string') {
-      return <span {...additionalChildrenProps}>{children}</span>
+      return (
+        <span {...additionalChildrenProps} className="Tooltip__target-wrapper">
+          {children}
+        </span>
+      )
     }
 
     // If children is a function, wrap inside a span to get a ref and use as a "render prop"
     if (typeof children === 'function') {
-      return <span {...additionalChildrenProps}>{children({ visible, toggle })}</span>
+      return (
+        <span {...additionalChildrenProps} className="Tooltip__target-wrapper">
+          {children({ visible, toggle })}
+        </span>
+      )
     }
 
     // It's safe to assume now that children is a react element or component (?),

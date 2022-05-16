@@ -8,6 +8,14 @@
   visibility: visible;
 }
 
+/*
+* Wrapper for tooltip target when its a render prop or a text node that forces display to inline-block
+* to insure its dimensions are the same as its child's and therefore doesn't mess the tooltip's position calculations
+*/
+.Tooltip__target-wrapper {
+  display: inline-block;
+}
+
 .Tooltip--nodelay .Tooltip__title {
   transition-delay: 0ms;
 }
