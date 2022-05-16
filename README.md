@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# react-tooltip
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This library provides a simple Tooltip component that can be used to provide contextual description for an element upon hover or keyboard focus or manually.
 
-## Available Scripts
+## Usage
 
-In the project directory, you can run:
+The simplest way to use this Tooltip component is by wrapping it around a target component:
 
-### `yarn start`
+```jsx
+import { Tooltip } from './Tooltip'
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+function TooltippedLink() {
+  return (
+    <Tooltip title="You have no unread notifications">
+      <a href="/notifications">Notifications</a>
+    </Tooltip>
+  )
+}
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Tooltip is toggled by hovering over the target element or focusing with the keyboard
 
-### `yarn test`
+The tooltip is positioned at the `bottom` of the target element by default, but you may customize that using the [`placement`](#available-options) prop:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```diff
+  return (
+-    <Tooltip title="You have no unread notifications">
++    <Tooltip title="You have no unread notifications" placement="right">
+      <a href="/notifications">Notifications</a>
+```
 
-### `yarn build`
+There may be situations where full control over the tooltip is preferred, for example if you want to toggle tooltip visibility with a button rather than show it on hover and focus. In this case, you may supply a function as a `children` prop to receive an object as a parameter containing the visibility state and a function to toggle it on or off:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```jsx
+import { Tooltip } from './Tooltip'
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+function HelpButton(props) {
+  return (
+    <Tooltip title={props.description} manual>
+      {({ visible, toggle }) => (
+        <button type="button" onClick={() => toggle()} aria-pressed={visible}>
+          <span className="sr-only">Help</span>
+          <svg>...</svg>
+        </button>
+      )}
+    </Tooltip>
+  )
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The `toggle` function can be used to both _toggle_ tooltip visibility as well as show/hide it by calling it with a parameter `toggle(true/false)`.
+ 
+If you take control of toggling tooltip visibility yourself, then be sure to also set the boolean prop `manual` to disable showing it on hover or focus.
 
-### `yarn eject`
+## Available options
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+| Prop | Type | Default | Required | Description |
+| --- | --- | --- | --- | --- |
+| `title` | `string` | ❌ | ✅ | The text to show in the tooltip |
+| `placement` | `string` | `bottom` | ❌ | Tooltip placement relative to the target element. Possible values: `left`, `top-left`, `top`, `top-right`, `right`, `bottom-left`, `bottom`, `bottom-right` |
+| `manual` | `boolean` | `false` | ❌ | Whether to control the tooltip manually or show on hover/focus |
+| `noDelay` | `boolean` | `false` | ❌ | Disable the delay of 200ms before showing the tooltip |
+| `children` | `function` or `string` or `ReactNode` | ❌ | ✅ | The target element for the tooltip. If its a function, it acts as a render prop and receives the following object as a parameter: `{ visible: boolean, toggle: (value?: boolean) => void }` |
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Caveats
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This component does not support automatic positioning so you'll have to make sure to set its `position` such that the tooltip is always shown within the viewport, otherwise the content may overflow and you'll see those ugly horizontal scroll bars.
