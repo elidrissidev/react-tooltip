@@ -7,6 +7,10 @@
   visibility: visible;
 }
 
+.Tooltip--nodelay .Tooltip__title {
+  transition-delay: 0ms;
+}
+
 .Tooltip__title {
   background-color: #24242f;
   border-radius: 4px;
@@ -22,7 +26,7 @@
   padding: 4px 8px;
   position: absolute;
   text-align: center;
-  transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in 500ms;
   visibility: hidden;
   width: fit-content;
 }

@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import './Tooltip.css'
 import { useTooltipPosition } from './hooks/useTooltipPosition'
 
-export function Tooltip({ title, placement, manual: isManual, children }) {
+export function Tooltip({ title, placement, manual: isManual, noDelay, children }) {
   const [visible, setVisible] = useState(false)
 
   const { targetElRef, tooltipElRef, position } = useTooltipPosition(placement)
@@ -64,7 +64,12 @@ export function Tooltip({ title, placement, manual: isManual, children }) {
   }
 
   return (
-    <div className={clsx('Tooltip', `Tooltip--${placement}`, { 'Tooltip--visible': visible })}>
+    <div
+      className={clsx('Tooltip', `Tooltip--${placement}`, {
+        'Tooltip--visible': visible,
+        'Tooltip--nodelay': noDelay || isManual,
+      })}
+    >
       {renderChildren()}
       <div
         ref={tooltipElRef}
@@ -95,6 +100,8 @@ Tooltip.propTypes = {
   ]),
   // Whether to control the tooltip manually or show on hover/focus
   manual: PropTypes.bool,
+  // Disable delay (200ms) when showing tooltip
+  noDelay: PropTypes.bool,
   // The target element for the tooltiip
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]).isRequired,
 }
@@ -102,4 +109,5 @@ Tooltip.propTypes = {
 Tooltip.defaultProps = {
   placement: 'bottom',
   manual: false,
+  noDelay: false,
 }
