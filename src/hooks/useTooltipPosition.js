@@ -52,36 +52,36 @@ function getPosition(placement, targetRect, tooltipRect) {
 
   switch (placement) {
     case 'left':
-      position.top = targetRect.y + targetRect.height / 2 - tooltipRect.height / 2
-      position.left = targetRect.x - tooltipRect.width - margin
+      position.top = -targetRect.height / 2
+      position.left = -tooltipRect.width - margin
       break
     case 'top-left':
-      position.top = targetRect.y - tooltipRect.height - margin
-      position.left = targetRect.x
+      position.top = -tooltipRect.height - margin
+      position.left = 0
       break
     case 'top':
-      position.top = targetRect.y - tooltipRect.height - margin
-      position.left = targetRect.x + targetRect.width / 2 - tooltipRect.width / 2
+      position.top = -tooltipRect.height - margin
+      position.left = targetRect.width / 2 - tooltipRect.width / 2
       break
     case 'top-right':
-      position.top = targetRect.y - tooltipRect.height - margin
-      position.left = targetRect.x + targetRect.width - tooltipRect.width
+      position.top = -tooltipRect.height - margin
+      position.left = targetRect.width - tooltipRect.width
       break
     case 'right':
-      position.top = targetRect.y + targetRect.height / 2 - tooltipRect.height / 2
-      position.left = targetRect.x + targetRect.width + margin
+      position.top = targetRect.height / 2 - tooltipRect.height / 2
+      position.left = targetRect.width + margin
       break
     case 'bottom-left':
-      position.top = targetRect.y + targetRect.height + margin
-      position.left = targetRect.x
+      position.top = targetRect.height + margin
+      position.left = 0
       break
     case 'bottom':
-      position.top = targetRect.y + targetRect.height + margin
-      position.left = targetRect.x + targetRect.width / 2 - tooltipRect.width / 2
+      position.top = targetRect.height + margin
+      position.left = targetRect.width / 2 - tooltipRect.width / 2
       break
     case 'bottom-right':
-      position.top = targetRect.y + targetRect.height + margin
-      position.left = targetRect.x + targetRect.width - tooltipRect.width
+      position.top = targetRect.height + margin
+      position.left = targetRect.width - tooltipRect.width
       break
     default:
       console.error('Unsupported tooltip placement:', placement)
